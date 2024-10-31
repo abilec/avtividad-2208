@@ -13,6 +13,10 @@ const Header = (props) => {
     const Alerta = (dato) => {
         alert(dato);
     }
+    const LogOut = () =>{
+        localStorage.clear();
+        window.location.replace("/login");
+    }
 
     return (
         <div className="flex flex-row fixed p-2.5 space-x-5 w-full  bg-white">
@@ -22,7 +26,7 @@ const Header = (props) => {
                     menu.map((item, index) => {
                         return (
                             <Linkbtn
-                                class={'px-5 py-1 text-azulc hover:text-rosa hover:underline hover:bg-azulc hover:rounded-full'}
+                                class={'px-5 py-1 text-azulc hover:text-rosa hover:underline '}
                                 to={item.to}
                                 text={item.text}
                                 key={index}
@@ -38,10 +42,18 @@ const Header = (props) => {
                     ph={'Buscar'}
                     change={(e) => { setTexto(e.target.value) }}
                     class={'border-2 border-azul rounded-full px-2 mr-2 '}
+                    
                 />
                 <Callbtn
                     text={'Enviar'}
                     callback={() => Alerta(texto)}
+                    class={'px-5  text-azulc hover:text-rosa hover:underline  hover:bg-azulc hover:rounded-full'}
+                />
+            </div>
+            <div className="flex justify-end ">
+                <Callbtn 
+                    text={'Log out'}
+                    callback={() => LogOut()}
                     class={'px-5  text-azulc hover:text-rosa hover:underline  hover:bg-azulc hover:rounded-full'}
                 />
             </div>
