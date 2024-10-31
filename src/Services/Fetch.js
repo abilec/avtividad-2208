@@ -6,7 +6,7 @@ export async function POST(url, data){
     mode: 'cors',
     headers: {
         'Content-Type':'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${localStorage.getItem('accesstoken')}`
     },
     body: JSON.stringify(data)
     })

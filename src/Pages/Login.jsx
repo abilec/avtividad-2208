@@ -1,28 +1,36 @@
 import Callbtn from '../Components/Buttons/buttonCall';
 import Input from '../Components/Inputs/Input';
 import { useState } from 'react'
-import PostApi from '../Services/Inter';
+import PostApi from '../Services/Auth';
 import Inicio from './Inicio';
-import { POST } from '../Services/Fetch';
 import gato from '../Assets/Img/noteinicio.jpg';
-
+import { jwtDecode } from 'jwt-decode';
 
 const Login = () => {
-    const [frmDatos, setFrmDatos] = useState({});
+    const [frmDatos, setFrmDatos] = useState({nombre:"",clave:""});
 
     const SubmitLogin = async () => {
-        if (!frmDatos.nombre || !frmDatos.contraseña) {
+        if (!frmDatos.nombre || !frmDatos.clave) {
             alert("Completa los campos.");
         } else {
-            let respond = {
-                name: frmDatos.nombre,
-                contra: frmDatos.contraseña
+            // let respond = {
+            //     name: frmDatos.nombre,
+            //     contra: frmDatos.contraseña
+            // }
+            // localStorage.setItem("accesstoken", JSON.stringify(respond));
+            try{
+                let rsp = await PostApi(frmDatos);
+                console.log(rsp);
+                if(rsp.accessToken){
+                    localStorage.setItem("accesstoken",rsp.accessToken);
+                    window.location.replace("/inicio");
+                }else{
+                    window.alert("Error Api");
+                }
+                
+            }catch{
+                window.alert("No esta registrado");
             }
-            localStorage.setItem("usrDatos", JSON.stringify(respond));
-            // let rsp = await POST("login",{name:frmDatos.nombre,contra:frmDatos.contraseña});
-            // localStorage.setItem("usrDatos",JSON.stringify(rsp.accessToken));
-
-            window.location.replace("/inicio");
         }
     }
 
@@ -51,7 +59,7 @@ const Login = () => {
                             <Input
                                 type={'password'}
                                 ph={'Contraseña'}
-                                change={(e) => { setFrmDatos({ ...frmDatos, contraseña: e.target.value }) }}
+                                change={(e) => { setFrmDatos({ ...frmDatos, clave: e.target.value }) }}
                                 class="border border-azul text-azulc font-bold hover:text-rosa rounded-full p-2"
                             />
 
