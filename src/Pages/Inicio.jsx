@@ -5,74 +5,50 @@ import notelila from "../Assets/Img/notebooklila.jpg";
 import sketches from "../Assets/Img/sketches.jpg";
 import notesalmon from "../Assets/Img/notesalmon.jpg";
 import Cardprod from "../Components/Cards/prodCard";
-import {jwtDecode} from "jwt-decode";
-import { useNavigate } from "react-router-dom";
-import AgregarProductos from "./administrador/agregarprod";
+import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 
 const Inicio = () => {
-    const [rol, setRol] = useState("");
-    const navigate = useNavigate();
+    const baseMenuLinks = [
+        { to: '/inicio', text: 'Inicio' }
+    ];
+    const [menuLinks, setMenuLinks] = useState(baseMenuLinks);
 
     useEffect(() => {
-        let token = localStorage.getItem("accesstoken");
+        const token = localStorage.getItem("accesstoken");
         if (token) {
-            let user = jwtDecode(token);
-            if (user.rol !== "admin") {
-                navigate("/inicio");
-            } else {
-                setRol(user.rol);
-            }
-        }
-    }, [navigate]);
+            const claims = jwtDecode(token);
+            let agregarLinks = [];
 
-    const MENU_LINKS = [
-        {
-            to: '/inicio',
-            text: 'Inicio'
-        },
-        {
-            to: '/info',
-            text: 'Acerca de'
-        },
-        {
-            to: '/contacto',
-            text: 'Contacto'
-        },
-        rol && {
-            to: '/agregarproductos',
-            text: 'Agregar Productos'
+            if (claims.Rol === "admin") {
+                agregarLinks = [
+                    { to: '/agregarproductos', text: 'Agregar Productos' },
+                    { to: '/modificarproductos', text: 'Modificar Productos' },
+                    { to: '/eliminarproductos', text: 'Eliminar Productos' }
+                ];
+            } else if (claims.Rol === "cliente") {
+                agregarLinks = [
+                    { to: '/info', text: 'Acerca de' },
+                    { to: '/contacto', text: 'Contacto' }
+                ];
+            }
+
+            setMenuLinks([...baseMenuLinks, ...agregarLinks]);
         }
-    ];
+    }, []);
+
 
     return (
         <div className="flex flex-col h-full w-full">
-            <Header menu={MENU_LINKS} />
-            {rol && <AgregarProductos />}
+            <Header menu={menuLinks} />
             <div className="flex w-full">
                 <img src={journal} alt="journal" />
             </div>
             <div className="flex flex-row gap-x-5 pt-20 px-20 items-center">
-                <Cardprod
-                    foto={notebook}
-                    texto="Notebook Floral"
-                    valor="$4500.-"
-                />
-                <Cardprod
-                    foto={notelila}
-                    texto="Notebook Lila"
-                    valor="$5000.-"
-                />
-                <Cardprod
-                    foto={sketches}
-                    texto="Notebook Rosa"
-                    valor="$5200.-"
-                />
-                <Cardprod
-                    foto={notesalmon}
-                    texto="Note Floral"
-                    valor="$4000.-"
-                />
+                <Cardprod foto={notebook} texto="Notebook Floral" valor="$4500.-" />
+                <Cardprod foto={notelila} texto="Notebook Lila" valor="$5000.-" />
+                <Cardprod foto={sketches} texto="Notebook Rosa" valor="$5200.-" />
+                <Cardprod foto={notesalmon} texto="Note Floral" valor="$4000.-" />
             </div>
         </div>
     );

@@ -9,6 +9,7 @@ import Backoffice from './Layouts/Backoffice';
 
 import Login from "./Pages/Login";
 import Inicio from "./Pages/Inicio";
+import AgregarProductos from "./Pages/administrador/agregarprod";
 
 // ----- CONSIGNA ----- //
 /**
@@ -72,6 +73,7 @@ const RouterApp = (props) => {
       setProtectedRoutes(
         <>
           {baseFrontRoutes("/inicio",<Inicio />)}
+          {baseFrontRoutes("/agregarproductos",<AgregarProductos/>)}
           {baseFrontRoutes("*", <>404</>)}
         </>
       );
