@@ -7,6 +7,7 @@ import notesalmon from "../Assets/Img/notesalmon.jpg";
 import Cardprod from "../Components/Cards/prodCard";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
+import ObtenerProductos from "../Services/Producto";
 
 const Inicio = () => {
     const [user, setUser] = useState("");
@@ -14,6 +15,7 @@ const Inicio = () => {
         { to: '/inicio', text: 'Inicio' }
     ];
     const [menuLinks, setMenuLinks] = useState(baseMenuLinks);
+    const [listaProductos, setListaProductos] = useState([]);
 
     useEffect(() => {
         const token = localStorage.getItem("accesstoken");
@@ -23,7 +25,7 @@ const Inicio = () => {
             if (claims.Rol === "admin") {
                 agregarLinks = [
                     { to: '/productos', text: 'Gestionar Productos' },
-                    
+
                 ];
             } else if (claims.Rol === "cliente") {
                 agregarLinks = [
@@ -35,6 +37,20 @@ const Inicio = () => {
             setMenuLinks([...baseMenuLinks, ...agregarLinks]);
         }
     }, []);
+
+    useEffect(() => {
+        const Lista = async () => {
+            try {
+                let rsp = await ObtenerProductos();
+                if (rsp) {
+                    setListaProductos(rsp);
+                }
+            } catch (error) {
+                console.error("Aca no hay nada pa");
+            }
+        }
+        Lista();
+    }, [])
 
 
     return (
@@ -48,12 +64,13 @@ const Inicio = () => {
                     <h1 className="font-serif italic text-azul text-3xl">Bienvenido/a {user.Usuario}!</h1>
                 </div>
             </div>
-            {user && user.Rol === "cliente" && (<div className="flex flex-row gap-x-5 pt-20 px-20 items-center">
-                <Cardprod foto={notebook} texto="Notebook Floral" valor="$4500.-" />
-                <Cardprod foto={notelila} texto="Notebook Lila" valor="$5000.-" />
-                <Cardprod foto={sketches} texto="Notebook Rosa" valor="$5200.-" />
-                <Cardprod foto={notesalmon} texto="Note Floral" valor="$4000.-" />
-            </div>)}
+            <div className="flex flex-row gap-x-5 pt-20 px-20 items-center">
+                {listaProductos.map((p, index) => {
+                    <Cardprod key={index} texto={p.nombre} valor={p.precio} />
+                }
+                )}
+                {/* <Cardprod foto={notesalmon} texto="Note Floral" valor="$4000.-" /> */}
+            </div>
         </div>
     );
 };

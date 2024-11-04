@@ -1,4 +1,3 @@
-import { backendurl } from "../env";
 import { POST } from "./Fetch";
 
 const PostApi =async (data)=>{

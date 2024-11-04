@@ -15,7 +15,7 @@ export async function POST(url, data){
     .catch((err) => console.log(err));
 };
 
-export async function GET(url, data){
+export async function GET(url,data={}){
 
     let objString = '?';
     if(Array.isArray(data))
@@ -31,7 +31,7 @@ export async function GET(url, data){
         method: 'GET',
         mode: 'cors',
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('accesstoken')}`
         }
     })
     .then((res) => res.json())
@@ -44,7 +44,7 @@ export async function PATCH(url, data){
         mode: 'cors',
         headers:{
             'Content-Type':'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('accesstoken')}`
         },
         body: JSON.stringify(data)
     })
@@ -60,7 +60,7 @@ export async function DELETE(url, data){
         method:'DELETE',
         mode:'cors',
         headers:{
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('accesstoken')}`
         },
     })
     .then((res) => res.json())
@@ -77,7 +77,7 @@ export async function POSTU(url, file){
         method: 'POST',
         mode: 'cors',
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('accesstoken')}`
         },
         body: data
     })
