@@ -1,20 +1,13 @@
 import Linkbtn from "../Buttons/buttonsLink";
 import Callbtn from "../Buttons/buttonCall";
-import Input from "../Inputs/Input";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Header = (props) => {
-    const [texto, setTexto] = useState("");
     const navigate = useNavigate();
-
-    const Alerta = (dato) => {
-        alert(dato);
-    }
 
     const LogOut = () => {
         localStorage.clear();
-        window.location.replace("/login");
+        navigate("/login");
     }
 
     const inicio = () =>{

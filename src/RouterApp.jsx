@@ -9,7 +9,9 @@ import Backoffice from './Layouts/Backoffice';
 
 import Login from "./Pages/Login";
 import Inicio from "./Pages/Inicio";
-import AgregarProductos from "./Pages/administrador/agregarprod";
+import GestionProductos from "./Pages/administrador/gestionproductos";
+import Info from "./Pages/cliente/info";
+import Contacto from "./Pages/cliente/contacto";
 
 // ----- CONSIGNA ----- //
 /**
@@ -44,26 +46,26 @@ const RouterApp = (props) => {
 
   const baseFrontRoutes = (route, children) => {
     return (
-      <Route 
-        path={route} 
+      <Route
+        path={route}
         element={
-          <Frontend 
-            children={children} 
+          <Frontend
+            children={children}
           />
-        } 
+        }
       />
     );
   }
 
   const baseBakendRoutes = (route, children) => {
     return (
-      <Route 
-        path={route} 
+      <Route
+        path={route}
         element={
-          <Backoffice 
-            children={children} 
+          <Backoffice
+            children={children}
           />
-        } 
+        }
       />
     )
   }
@@ -72,26 +74,28 @@ const RouterApp = (props) => {
     if (localStorage.getItem("accesstoken")) {
       setProtectedRoutes(
         <>
-          {baseFrontRoutes("/inicio",<Inicio />)}
-          {baseFrontRoutes("/agregarproductos",<AgregarProductos/>)}
-          {baseFrontRoutes("*", <>404</>)}
+          {baseFrontRoutes("/inicio", <Inicio />)}
+          {baseFrontRoutes("/productos", <GestionProductos />)}
+          {baseFrontRoutes("/info", <Info />)}
+          {baseFrontRoutes("/contacto", <Contacto />)}
+          {baseFrontRoutes("/login", <Login />)}
         </>
       );
     } else {
       setProtectedRoutes(
-      <>
-       { baseFrontRoutes("*", <Login />)}
-      </>);
+        <>
+          {baseFrontRoutes("/login", <Login />)}
+        </>);
     }
   }, [user])
 
- 
+
   return (
     <>
       <BrowserRouter>
-          <Routes>
-            {protectedRoutes}
-          </Routes>
+        <Routes>
+          {protectedRoutes}
+        </Routes>
       </BrowserRouter>
     </>
 

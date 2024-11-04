@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Header from "../../Components/Header/header"
 
-const AgregarProductos = () => {
+const GestionProductos = () => {
     const [menuLinks, setMenuLinks] = useState([
         { to: "/inicio", text: "Inicio" }
     ]);
@@ -17,4 +17,4 @@ const AgregarProductos = () => {
 }
 
 
-export default AgregarProductos
+export default GestionProductos

@@ -22,9 +22,8 @@ const Inicio = () => {
             let agregarLinks = [];
             if (claims.Rol === "admin") {
                 agregarLinks = [
-                    { to: '/agregarproductos', text: 'Agregar Productos' },
-                    { to: '/modificarproductos', text: 'Modificar Productos' },
-                    { to: '/eliminarproductos', text: 'Eliminar Productos' }
+                    { to: '/productos', text: 'Gestionar Productos' },
+                    
                 ];
             } else if (claims.Rol === "cliente") {
                 agregarLinks = [
