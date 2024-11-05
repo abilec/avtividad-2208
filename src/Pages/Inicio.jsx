@@ -62,9 +62,9 @@ const Inicio = () => {
                     <h1 className="font-serif italic text-azul text-3xl">Bienvenido/a {user.Usuario}!</h1>
                 </div>
             </div>
-            <div className="flex flex-row gap-x-5 pt-20 px-20 items-center">
+            <div className="flex flex-row flex-wrap gap-x-5 pt-20 px-20 items-center justify-center">
                 {listaProductos.map((p, index) => (
-                    <Cardprod key={index} texto={p.nombre} valor={p.precio} />
+                    <Cardprod key={index} texto={p.nombre} valor={"$"+p.precio} foto={p.img_url} />
                 ))}
             </div>
         </div>
