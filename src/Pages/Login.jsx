@@ -5,9 +5,11 @@ import PostApi from '../Services/Auth';
 import Inicio from './Inicio';
 import gato from '../Assets/Img/noteinicio.jpg';
 import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [frmDatos, setFrmDatos] = useState({nombre:"",clave:""});
+    const navigate = useNavigate();
 
     const SubmitLogin = async () => {
         if (!frmDatos.nombre || !frmDatos.clave) {
@@ -23,7 +25,7 @@ const Login = () => {
                 console.log(rsp);
                 if(rsp.accessToken){
                     localStorage.setItem("accesstoken",rsp.accessToken);
-                    window.location.replace("/inicio");
+                    navigate("/inicio");
                 }else{
                     window.alert("Error Api");
                 }

@@ -7,7 +7,7 @@ const Header = (props) => {
 
     const LogOut = () => {
         localStorage.clear();
-        navigate("/login");
+        navigate("/");
     }
 
     const inicio = () =>{

@@ -78,6 +78,7 @@ const RouterApp = (props) => {
           {baseFrontRoutes("/productos", <GestionProductos />)}
           {baseFrontRoutes("/info", <Info />)}
           {baseFrontRoutes("/contacto", <Contacto />)}
+          {baseFrontRoutes("/", <Login />)}
         </>
       );
     } else {
