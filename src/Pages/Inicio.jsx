@@ -7,24 +7,24 @@ import notesalmon from "../Assets/Img/notesalmon.jpg";
 import Cardprod from "../Components/Cards/prodCard";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
+import ObtenerProductos from "../Services/Producto";
 
 const Inicio = () => {
+    const [user, setUser] = useState("");
     const baseMenuLinks = [
         { to: '/inicio', text: 'Inicio' }
     ];
     const [menuLinks, setMenuLinks] = useState(baseMenuLinks);
+    const [listaProductos, setListaProductos] = useState([]);
 
     useEffect(() => {
         const token = localStorage.getItem("accesstoken");
         if (token) {
             const claims = jwtDecode(token);
             let agregarLinks = [];
-
             if (claims.Rol === "admin") {
                 agregarLinks = [
-                    { to: '/agregarproductos', text: 'Agregar Productos' },
-                    { to: '/modificarproductos', text: 'Modificar Productos' },
-                    { to: '/eliminarproductos', text: 'Eliminar Productos' }
+                    { to: '/productos', text: 'Gestionar Productos' },
                 ];
             } else if (claims.Rol === "cliente") {
                 agregarLinks = [
@@ -32,11 +32,24 @@ const Inicio = () => {
                     { to: '/contacto', text: 'Contacto' }
                 ];
             }
-
+            setUser(claims);
             setMenuLinks([...baseMenuLinks, ...agregarLinks]);
         }
     }, []);
 
+    useEffect(() => {
+        const Lista = async () => {
+            try {
+                let rsp = await ObtenerProductos();
+                if (rsp) {
+                    setListaProductos(rsp);
+                }
+            } catch (error) {
+                console.error("No se encontro respuesta para ListadeProductos");
+            }
+        }
+        Lista();
+    }, [])
 
     return (
         <div className="flex flex-col h-full w-full">
@@ -44,11 +57,15 @@ const Inicio = () => {
             <div className="flex w-full">
                 <img src={journal} alt="journal" />
             </div>
+            <div className="flex flex-col">
+                <div className="text-center">
+                    <h1 className="font-serif italic text-azul text-3xl">Bienvenido/a {user.Usuario}!</h1>
+                </div>
+            </div>
             <div className="flex flex-row gap-x-5 pt-20 px-20 items-center">
-                <Cardprod foto={notebook} texto="Notebook Floral" valor="$4500.-" />
-                <Cardprod foto={notelila} texto="Notebook Lila" valor="$5000.-" />
-                <Cardprod foto={sketches} texto="Notebook Rosa" valor="$5200.-" />
-                <Cardprod foto={notesalmon} texto="Note Floral" valor="$4000.-" />
+                {listaProductos.map((p, index) => (
+                    <Cardprod key={index} texto={p.nombre} valor={p.precio} />
+                ))}
             </div>
         </div>
     );
