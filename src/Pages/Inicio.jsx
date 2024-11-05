@@ -25,7 +25,6 @@ const Inicio = () => {
             if (claims.Rol === "admin") {
                 agregarLinks = [
                     { to: '/productos', text: 'Gestionar Productos' },
-
                 ];
             } else if (claims.Rol === "cliente") {
                 agregarLinks = [
@@ -46,12 +45,11 @@ const Inicio = () => {
                     setListaProductos(rsp);
                 }
             } catch (error) {
-                console.error("Aca no hay nada pa");
+                console.error("No se encontro respuesta para ListadeProductos");
             }
         }
         Lista();
     }, [])
-
 
     return (
         <div className="flex flex-col h-full w-full">
@@ -65,11 +63,9 @@ const Inicio = () => {
                 </div>
             </div>
             <div className="flex flex-row gap-x-5 pt-20 px-20 items-center">
-                {listaProductos.map((p, index) => {
+                {listaProductos.map((p, index) => (
                     <Cardprod key={index} texto={p.nombre} valor={p.precio} />
-                }
-                )}
-                {/* <Cardprod foto={notesalmon} texto="Note Floral" valor="$4000.-" /> */}
+                ))}
             </div>
         </div>
     );

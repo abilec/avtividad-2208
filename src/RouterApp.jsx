@@ -78,13 +78,12 @@ const RouterApp = (props) => {
           {baseFrontRoutes("/productos", <GestionProductos />)}
           {baseFrontRoutes("/info", <Info />)}
           {baseFrontRoutes("/contacto", <Contacto />)}
-          {baseFrontRoutes("/login", <Login />)}
         </>
       );
     } else {
       setProtectedRoutes(
         <>
-          {baseFrontRoutes("/login", <Login />)}
+          {baseFrontRoutes("*", <Login />)}
         </>);
     }
   }, [user])

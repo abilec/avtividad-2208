@@ -1,12 +1,12 @@
-import { GET } from "./Fetch"
+import { GETBASICO } from "./Fetch"
 
 const ObtenerProductos = async () =>{
     try {
-        let rsp = await GET("lista");
-        return rsp;
+        let rsp = await GETBASICO("lista");
+        return rsp?.data || [];
     } catch (error) {
         console.error("Error al obtener lista de productos");
-        return null;
+        return [];
     }
 }
 

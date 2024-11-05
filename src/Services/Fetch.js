@@ -15,7 +15,7 @@ export async function POST(url, data){
     .catch((err) => console.log(err));
 };
 
-export async function GET(url,data={}){
+export async function GET(url,data){
 
     let objString = '?';
     if(Array.isArray(data))
@@ -37,6 +37,19 @@ export async function GET(url,data={}){
     .then((res) => res.json())
     .then((res) => res);
 };
+
+export async function GETBASICO(url) {
+    return await fetch(backendurl + url, {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('accesstoken')}`
+        }
+    })
+    .then((res) => res.json())
+    .then((res) => res);
+}
+
 
 export async function PATCH(url, data){
     return await fetch(backendurl + url, {
