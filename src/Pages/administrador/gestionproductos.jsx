@@ -4,6 +4,7 @@ import Header from "../../Components/Header/header";
 import Card from "../../Components/Cards/Card";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const GestionProductos = () => {
     const [menuLinks, setMenuLinks] = useState([
@@ -45,8 +46,12 @@ const GestionProductos = () => {
     return (
         <div className="flex flex-col h-full w-full items-center">
             <Header menu={menuLinks} />
+
+            <div className="flex flex-col mt-20">
+                <button className=" text-azulc hover:text-rosa hover:bg-azulc rounded-lg p-2">Agregar Producto <AddCircleOutlineIcon fontSize="large"/></button>
+            </div>
             
-            <div className="flex flex-col w-[25vw] h-[72.5vh] mt-20 border-2 border-azul rounded-lg overflow-y-auto">
+            <div className="flex flex-col w-[25vw] h-[72.5vh] mt-5 border-2 border-azul rounded-lg overflow-y-auto">
                 {
                     obtenerProductosPagina().map((p, index) => (
                         <Card key={index} texto={p.nombre} valor={p.precio} foto={p.img_url} />
@@ -58,7 +63,7 @@ const GestionProductos = () => {
             <div className="flex mt-4 space-x-4">
                 <button 
                     onClick={() => cambiarPagina(paginaActual - 1)} 
-                    className="p-2 text-rosa hover:bg-azul rounded-lg disabled:bg-gray-400"
+                    className="p-2 text-azulc rounded-lg disabled:bg-gray-400"
                     disabled={paginaActual === 1}
                 >
                     <ArrowBackIcon/> Anterior
@@ -66,10 +71,10 @@ const GestionProductos = () => {
                 <span className="text-center text-base">Página {paginaActual}</span>
                 <button 
                     onClick={() => cambiarPagina(paginaActual + 1)} 
-                    className="p-2 text-rosa hover:bg-azul rounded-lg disabled:bg-gray-400"
+                    className="p-2 text-azulc rounded-lg disabled:bg-gray-400"
                     disabled={paginaActual === Math.ceil(listaProductos.length / productosPorPagina)}
                 >
-                    Siguienterwrrwr <ArrowForwardIcon/>
+                    Siguiente <ArrowForwardIcon/>
                 </button>
             </div>
         </div>
