@@ -69,7 +69,7 @@ const GestionProductos = () => {
                     className="p-2 text-rosa hover:bg-azul rounded-lg disabled:bg-gray-400"
                     disabled={paginaActual === Math.ceil(listaProductos.length / productosPorPagina)}
                 >
-                    Siguiente <ArrowForwardIcon/>
+                    Siguienterwrrwr <ArrowForwardIcon/>
                 </button>
             </div>
         </div>
