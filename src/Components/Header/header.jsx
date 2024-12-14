@@ -32,7 +32,7 @@ const Header = (props) => {
                 <Callbtn
                     text={'Cerrar Sesion'}
                     callback={LogOut}
-                    class={'px-5 text-azulc hover:text-rosa hover:underline hover:bg-azulc hover:rounded-full'}
+                    class={'px-5 text-azulc hover:text-rosa hover:underline'}
                 />
             </div>
         </div>

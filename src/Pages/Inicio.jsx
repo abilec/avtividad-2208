@@ -7,7 +7,7 @@ import notesalmon from "../Assets/Img/notesalmon.jpg";
 import Cardprod from "../Components/Cards/prodCard";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
-import ObtenerProductos from "../Services/Producto";
+import {ObtenerProductos} from "../Services/Producto";
 
 const Inicio = () => {
     const [user, setUser] = useState("");
@@ -52,7 +52,7 @@ const Inicio = () => {
     }, [])
 
     return (
-        <div className="flex flex-col h-full w-full">
+        <div className="flex flex-col h-full w-full ">
             <Header menu={menuLinks} />
             <div className="flex w-full">
                 <img src={journal} alt="journal" />

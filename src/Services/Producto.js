@@ -1,6 +1,6 @@
-import { GETBASICO } from "./Fetch"
+import { GETBASICO,POST,DELETE } from "./Fetch"
 
-const ObtenerProductos = async () =>{
+export async function ObtenerProductos(){
     try {
         let rsp = await GETBASICO("lista");
         return rsp?.data || [];
@@ -10,4 +10,23 @@ const ObtenerProductos = async () =>{
     }
 }
 
-export default ObtenerProductos;
+export async function NuevoProducto(data){
+    try {
+        let rsp = await POST("alta",data);
+        return rsp;
+    } catch (error) {
+        console.error("Error al agregar nuevo producto");
+        return null;
+    }
+}
+
+export async function EliminarProducto(id){
+    try {
+        let rsp = await DELETE(`baja/${id}`);
+        return rsp;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+

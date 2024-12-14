@@ -8,7 +8,7 @@ import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const [frmDatos, setFrmDatos] = useState({nombre:"",clave:""});
+    const [frmDatos, setFrmDatos] = useState({ nombre: "", clave: "" });
     const navigate = useNavigate();
 
     const SubmitLogin = async () => {
@@ -20,17 +20,17 @@ const Login = () => {
             //     contra: frmDatos.contraseña
             // }
             // localStorage.setItem("accesstoken", JSON.stringify(respond));
-            try{
+            try {
                 let rsp = await PostApi(frmDatos);
                 console.log(rsp);
-                if(rsp.accessToken){
-                    localStorage.setItem("accesstoken",rsp.accessToken);
+                if (rsp.accessToken) {
+                    localStorage.setItem("accesstoken", rsp.accessToken);
                     navigate("/inicio");
-                }else{
+                } else {
                     window.alert("Error Api");
                 }
-                
-            }catch{
+
+            } catch {
                 window.alert("No esta registrado");
             }
         }
@@ -42,7 +42,7 @@ const Login = () => {
             <div className='h-[100vh] bg-gradient-to-br from-crema to-rosa flex justify-center items-center'>
                 <div className='flex flex-row w-[50vw] h-[50vh] bg-white rounded-lg shadow-2xl'>
                     <div className='flex w-[25vw] h-[50vh] justify-center items-center'>
-                        <img src={gato} className='flex w-[20vw] '/>
+                        <img src={gato} className='flex w-[20vw] ' />
                     </div>
                     <div className=' w-[25vw] h-[50vh] flex flex-col justify-center items-center'>
                         <div className='text-center' >
@@ -56,7 +56,7 @@ const Login = () => {
                                 type={'text'}
                                 ph={'Ingrese nombre'}
                                 change={(e) => { setFrmDatos({ ...frmDatos, nombre: e.target.value }) }}
-                                 class="border border-azul text-azulc font-bold hover:text-rosa rounded-full p-2"
+                                class="border border-azul text-azulc font-bold hover:text-rosa rounded-full p-2"
                             />
                             <Input
                                 type={'password'}
@@ -66,7 +66,7 @@ const Login = () => {
                             />
 
                             <Callbtn
-                                text={'Enviar'}
+                                text={'Acceder'}
                                 callback={() => { SubmitLogin() }}
                                 class={'bg-azul rounded-full text-crema  hover:bg-rosa hover:text-azul hover:underline hover:shadow-2xl p-1 '}
                             />
