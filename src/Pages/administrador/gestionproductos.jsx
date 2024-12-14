@@ -1,10 +1,10 @@
-import ObtenerProductos from "../../Services/Producto";
+import {ObtenerProductos} from "../../Services/Producto";
 import { useState, useEffect } from "react";
 import Header from "../../Components/Header/header";
 import Card from "../../Components/Cards/Card";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AgregarProducto from "../../Layouts/AgregarProducto";
 
 const GestionProductos = () => {
     const [menuLinks, setMenuLinks] = useState([
@@ -27,7 +27,7 @@ const GestionProductos = () => {
             }
         }
         Lista();
-    }, []);
+    }, [listaProductos]);
 
     // Función para obtener los productos de la página actual
     const obtenerProductosPagina = () => {
@@ -48,7 +48,7 @@ const GestionProductos = () => {
             <Header menu={menuLinks} />
 
             <div className="flex flex-col mt-20">
-                <button className=" text-azulc hover:text-rosa hover:bg-azulc rounded-lg p-2">Agregar Producto <AddCircleOutlineIcon fontSize="large"/></button>
+                <AgregarProducto/>
             </div>
             
             <div className="flex flex-col w-[25vw] h-[72.5vh] mt-5 border-2 border-azul rounded-lg overflow-y-auto">

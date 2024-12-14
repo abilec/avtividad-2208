@@ -7,7 +7,7 @@ import notesalmon from "../Assets/Img/notesalmon.jpg";
 import Cardprod from "../Components/Cards/prodCard";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
-import ObtenerProductos from "../Services/Producto";
+import {ObtenerProductos} from "../Services/Producto";
 
 const Inicio = () => {
     const [user, setUser] = useState("");
