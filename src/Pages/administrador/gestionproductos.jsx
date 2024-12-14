@@ -17,6 +17,8 @@ const GestionProductos = () => {
     const [paginaActual, setPaginaActual] = useState(1);
     const productosPorPagina = 4;
     const [terminoBusqueda, setTerminoBusqueda] = useState('');
+    const [precioMin, setPrecioMin] = useState('');
+    const [precioMax, setPrecioMax] = useState('');
 
     useEffect(() => {
         const Lista = async () => {
@@ -30,15 +32,25 @@ const GestionProductos = () => {
             }
         }
         Lista();
-    }, []);
+    }, [listaProductos]);
 
     const handleBusquedaChange = (e) => {
         setTerminoBusqueda(e.target.value);
     };
 
-    const productosFiltrados = listaProductos.filter((producto) =>
-        producto.nombre.toLowerCase().includes(terminoBusqueda.toLowerCase())
-    );
+    const handlePrecioMinChange = (e) => {
+        setPrecioMin(e.target.value);
+    };
+
+    const handlePrecioMaxChange = (e) => {
+        setPrecioMax(e.target.value);
+    };
+
+    const productosFiltrados = listaProductos.filter((producto) => {
+        const cumpleBusqueda = producto.nombre.toLowerCase().includes(terminoBusqueda.toLowerCase());
+        const cumplePrecio = (!precioMin || producto.precio >= precioMin) && (!precioMax || producto.precio <= precioMax);
+        return cumpleBusqueda && cumplePrecio;
+    });
 
     // Función para obtener los productos de la página actual
     const obtenerProductosPagina = () => {
@@ -73,10 +85,28 @@ const GestionProductos = () => {
                         onChange={handleBusquedaChange}
                     />
                 </label>
+                <div className="flex mt-4 space-x-4">
+                    <input
+                        className="placeholder:italic placeholder:text-slate-400 block bg-white border border-slate-300 rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                        placeholder="Precio mínimo"
+                        type="number"
+                        name="precioMin"
+                        value={precioMin}
+                        onChange={handlePrecioMinChange}
+                    />
+                    <input
+                        className="placeholder:italic placeholder:text-slate-400 block bg-white border border-slate-300 rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                        placeholder="Precio máximo"
+                        type="number"
+                        name="precioMax"
+                        value={precioMax}
+                        onChange={handlePrecioMaxChange}
+                    />
+                </div>
             </div>
 
             <div className="flex flex-col w-[25vw] h-[72.5vh] mt-5 border-2 border-azul rounded-lg overflow-y-auto">
-                <div className="mb-3 text-center mt-5">
+                <div className="mb-4 text-center mt-5">
                     <AgregarProducto />
                 </div>
                 {
