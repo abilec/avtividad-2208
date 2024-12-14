@@ -5,6 +5,7 @@ import Card from "../../Components/Cards/Card";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AgregarProducto from "../../Layouts/AgregarProducto";
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
 const GestionProductos = () => {
     const [menuLinks, setMenuLinks] = useState([
@@ -14,7 +15,8 @@ const GestionProductos = () => {
 
     const [listaProductos, setListaProductos] = useState([]);
     const [paginaActual, setPaginaActual] = useState(1);
-    const productosPorPagina = 5;
+    const productosPorPagina = 4;
+    const [terminoBusqueda, setTerminoBusqueda] = useState('');
 
     useEffect(() => {
         const Lista = async () => {
@@ -28,18 +30,26 @@ const GestionProductos = () => {
             }
         }
         Lista();
-    }, [listaProductos]);
+    }, []);
+
+    const handleBusquedaChange = (e) => {
+        setTerminoBusqueda(e.target.value);
+    };
+
+    const productosFiltrados = listaProductos.filter((producto) =>
+        producto.nombre.toLowerCase().includes(terminoBusqueda.toLowerCase())
+    );
 
     // Función para obtener los productos de la página actual
     const obtenerProductosPagina = () => {
         const inicio = (paginaActual - 1) * productosPorPagina;
         const fin = inicio + productosPorPagina;
-        return listaProductos.slice(inicio, fin);
+        return productosFiltrados.slice(inicio, fin);
     };
 
     // Función para cambiar la página
     const cambiarPagina = (pagina) => {
-        if (pagina >= 1 && pagina <= Math.ceil(listaProductos.length / productosPorPagina)) {
+        if (pagina >= 1 && pagina <= Math.ceil(productosFiltrados.length / productosPorPagina)) {
             setPaginaActual(pagina);
         }
     };
@@ -49,13 +59,29 @@ const GestionProductos = () => {
             <Header menu={menuLinks} />
 
             <div className="flex flex-col mt-20">
-                <AgregarProducto />
+                <label className="relative block">
+                    <span className="sr-only">Buscar producto</span>
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+                        <SearchRoundedIcon />
+                    </span>
+                    <input
+                        className="placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                        placeholder="Buscar producto..."
+                        type="text"
+                        name="search"
+                        value={terminoBusqueda}
+                        onChange={handleBusquedaChange}
+                    />
+                </label>
             </div>
 
             <div className="flex flex-col w-[25vw] h-[72.5vh] mt-5 border-2 border-azul rounded-lg overflow-y-auto">
+                <div className="mb-3 text-center mt-5">
+                    <AgregarProducto />
+                </div>
                 {
                     obtenerProductosPagina().map((p, index) => (
-                        <Card key={index} texto={p.nombre} valor={p.precio} foto={p.img_url} id={p.id_prod} productoInicial={p} />
+                        <Card key={index} texto={p.nombre} valor={p.precio} foto={p.img_url} id={p.id_prod} productoInicial={p} actualizarLista={() => setListaProductos([...listaProductos])} />
                     ))
                 }
             </div>
@@ -73,7 +99,7 @@ const GestionProductos = () => {
                 <button
                     onClick={() => cambiarPagina(paginaActual + 1)}
                     className="p-2 text-azulc rounded-lg disabled:bg-gray-400"
-                    disabled={paginaActual === Math.ceil(listaProductos.length / productosPorPagina)}
+                    disabled={paginaActual === Math.ceil(productosFiltrados.length / productosPorPagina)}
                 >
                     Siguiente <ArrowForwardIcon />
                 </button>
