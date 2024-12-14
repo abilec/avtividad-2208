@@ -1,5 +1,5 @@
-import ModeIcon from '@mui/icons-material/Mode';
 import EliminarProducto from '../../Layouts/EliminarProducto';
+import ModificarProducto from '../../Layouts/ModificarProducto';
 
 const Card = (props) => {
     return (
@@ -14,11 +14,7 @@ const Card = (props) => {
                 <h1 className="text-xl">{props.texto}</h1>
                 <p>${props.valor}</p>
             </div>
-
-            {/* Botón en la esquina inferior derecha */}
-            <button type="button" className="absolute right-2 text-azulc hover:bg-azulc hover:text-rosa rounded-md w-8 h-8">
-                <ModeIcon fontSize="small" />
-            </button>
+            <ModificarProducto id={props.id} productoInicial={props.productoInicial} />
             <EliminarProducto id={props.id} />
         </div>
     );

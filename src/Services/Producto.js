@@ -1,4 +1,4 @@
-import { GETBASICO,POST,DELETE } from "./Fetch"
+import { GETBASICO,POST,DELETE,PATCH } from "./Fetch"
 
 export async function ObtenerProductos(){
     try {
@@ -24,6 +24,17 @@ export async function BorrarProducto(id){
     try {
         let rsp = await DELETE(`baja/${id}`);
         return rsp;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+export async function EditarProducto(data)
+{
+    try {
+        let rsp = await PATCH("modificar",data);
+        return rsp; 
     } catch (error) {
         console.error(error);
         return null;

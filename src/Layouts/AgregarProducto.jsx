@@ -33,7 +33,7 @@ const AgregarProducto = () => {
                     <InputModal type={"text"} label={"Precio"} funcion={(e) => setNuevo({...nuevo,precio: e.target.value })} />
                 </div>
                 <div className="mb-4">
-                    <InputModal type={"file"} label={"Imagen"} funcion={(e) => setNuevo({...nuevo,img_url: e.target.value })} />
+                    <InputModal type={"file"} label={"Imagen"} funcion={(e) => setNuevo({...nuevo,img_url: e.target.files[0] })} />
                 </div>
             </Modal>
         </>

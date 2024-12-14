@@ -7,6 +7,7 @@ const InputModal = (props) => {
                 type={props.type}
                 className="border rounded-lg border-azul w-[20vw] p-1 m-2"
                 onChange={props.funcion}
+                value={props.value}
             />
         </>
     )
