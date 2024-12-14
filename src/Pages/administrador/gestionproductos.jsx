@@ -54,7 +54,7 @@ const GestionProductos = () => {
             <div className="flex flex-col w-[25vw] h-[72.5vh] mt-5 border-2 border-azul rounded-lg overflow-y-auto">
                 {
                     obtenerProductosPagina().map((p, index) => (
-                        <Card key={index} texto={p.nombre} valor={p.precio} foto={p.img_url} />
+                        <Card key={index} texto={p.nombre} valor={p.precio} foto={p.img_url} id={p.id_prod} />
                     ))
                 }
             </div>

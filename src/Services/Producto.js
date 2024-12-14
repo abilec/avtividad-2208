@@ -1,4 +1,4 @@
-import { GETBASICO,POST } from "./Fetch"
+import { GETBASICO,POST,DELETE } from "./Fetch"
 
 export async function ObtenerProductos(){
     try {
@@ -18,5 +18,15 @@ export async function NuevoProducto(data){
         console.error("Error al agregar nuevo producto");
         return null;
     }
-} 
+}
+
+export async function EliminarProducto(id){
+    try {
+        let rsp = await DELETE(`baja/${id}`);
+        return rsp;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
 
