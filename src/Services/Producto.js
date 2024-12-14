@@ -20,7 +20,7 @@ export async function NuevoProducto(data){
     }
 }
 
-export async function EliminarProducto(id){
+export async function BorrarProducto(id){
     try {
         let rsp = await DELETE(`baja/${id}`);
         return rsp;
