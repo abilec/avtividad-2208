@@ -14,7 +14,7 @@ const Card = (props) => {
                 <h1 className="text-xl">{props.texto}</h1>
                 <p>${props.valor}</p>
             </div>
-            <ModificarProducto id={props.id} productoInicial={props.productoInicial} />
+            <ModificarProducto id={props.id} productoInicial={props.productoInicial} actualizarLista={props.actualizarLista} />
             <EliminarProducto id={props.id} />
         </div>
     );
