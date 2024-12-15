@@ -46,7 +46,7 @@ const Login = () => {
                     </div>
                     <div className=' w-[25vw] h-[50vh] flex flex-col justify-center items-center'>
                         <div className='text-center' >
-                            <h1 className="font-serif italic text-4xl text-azul" >Shop</h1>
+                            <h1 className="font-serif italic font-bold text-4xl text-azul" >Note Shop</h1>
                             <h6 className='text-azulc'>Iniciar Sesión</h6>
                         </div>
 

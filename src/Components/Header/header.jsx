@@ -16,7 +16,7 @@ const Header = (props) => {
 
     return (
         <div className="flex flex-row fixed p-2.5 space-x-5 w-full bg-white">
-            <button onClick={inicio}><h1 className="font-serif italic text-2xl text-azul">Shop</h1></button>
+            <button onClick={inicio}><h1 className="font-serif italic font-bold text-2xl text-azulc">Note Shop</h1></button>
             <div className="flex flex-grow justify-start">
                 {props.menu.map((item, index) => (
                     <Linkbtn
