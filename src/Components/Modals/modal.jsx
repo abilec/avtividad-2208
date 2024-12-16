@@ -15,14 +15,14 @@ const Modal = (props) => {
                 </div>
 
                 {/* Contenedor de los botones */}
-                <div className="absolute bottom-4 right-4 flex space-x-4">
+                {!props.btncomprar && (<div className="absolute bottom-4 right-4 flex space-x-4">
                     <button onClick={props.onClick} className="aceptar px-4 py-2 rounded-lg">
                         Aceptar
                     </button>
                     <button onClick={props.onClose} className="cancelar px-4 py-2 rounded-lg">
                         Cancelar
                     </button>
-                </div>
+                </div>)}
             </div>
         </div>
     );

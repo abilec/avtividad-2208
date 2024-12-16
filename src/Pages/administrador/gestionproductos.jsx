@@ -1,19 +1,24 @@
-import {ObtenerProductos} from "../../Services/Producto";
+import { ObtenerProductos } from "../../Services/Producto";
 import { useState, useEffect } from "react";
 import Header from "../../Components/Header/header";
 import Card from "../../Components/Cards/Card";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AgregarProducto from "../../Layouts/AgregarProducto";
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
 const GestionProductos = () => {
     const [menuLinks, setMenuLinks] = useState([
-        { to: "/inicio", text: "Inicio" }
+        { to: "/inicio", text: "Inicio" },
+        { to: "/productos", text: "Gestionar Productos" }
     ]);
 
     const [listaProductos, setListaProductos] = useState([]);
     const [paginaActual, setPaginaActual] = useState(1);
-    const productosPorPagina = 5;
+    const productosPorPagina = 4;
+    const [terminoBusqueda, setTerminoBusqueda] = useState('');
+    const [precioMin, setPrecioMin] = useState('');
+    const [precioMax, setPrecioMax] = useState('');
 
     useEffect(() => {
         const Lista = async () => {
@@ -29,16 +34,34 @@ const GestionProductos = () => {
         Lista();
     }, [listaProductos]);
 
+    const handleBusquedaChange = (e) => {
+        setTerminoBusqueda(e.target.value);
+    };
+
+    const handlePrecioMinChange = (e) => {
+        setPrecioMin(e.target.value);
+    };
+
+    const handlePrecioMaxChange = (e) => {
+        setPrecioMax(e.target.value);
+    };
+
+    const productosFiltrados = listaProductos.filter((producto) => {
+        const cumpleBusqueda = producto.nombre.toLowerCase().includes(terminoBusqueda.toLowerCase());
+        const cumplePrecio = (!precioMin || producto.precio >= precioMin) && (!precioMax || producto.precio <= precioMax);
+        return cumpleBusqueda && cumplePrecio;
+    });
+
     // Función para obtener los productos de la página actual
     const obtenerProductosPagina = () => {
         const inicio = (paginaActual - 1) * productosPorPagina;
         const fin = inicio + productosPorPagina;
-        return listaProductos.slice(inicio, fin);
+        return productosFiltrados.slice(inicio, fin);
     };
 
     // Función para cambiar la página
     const cambiarPagina = (pagina) => {
-        if (pagina >= 1 && pagina <= Math.ceil(listaProductos.length / productosPorPagina)) {
+        if (pagina >= 1 && pagina <= Math.ceil(productosFiltrados.length / productosPorPagina)) {
             setPaginaActual(pagina);
         }
     };
@@ -48,33 +71,67 @@ const GestionProductos = () => {
             <Header menu={menuLinks} />
 
             <div className="flex flex-col mt-20">
-                <AgregarProducto/>
+                <label className="relative block">
+                    <span className="sr-only">Buscar producto</span>
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+                        <SearchRoundedIcon />
+                    </span>
+                    <input
+                        className="placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                        placeholder="Buscar producto..."
+                        type="text"
+                        name="search"
+                        value={terminoBusqueda}
+                        onChange={handleBusquedaChange}
+                    />
+                </label>
+                <div className="flex mt-4 space-x-4">
+                    <input
+                        className="placeholder:italic placeholder:text-slate-400 block bg-white border border-slate-300 rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                        placeholder="Precio mínimo"
+                        type="number"
+                        name="precioMin"
+                        value={precioMin}
+                        onChange={handlePrecioMinChange}
+                    />
+                    <input
+                        className="placeholder:italic placeholder:text-slate-400 block bg-white border border-slate-300 rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                        placeholder="Precio máximo"
+                        type="number"
+                        name="precioMax"
+                        value={precioMax}
+                        onChange={handlePrecioMaxChange}
+                    />
+                </div>
             </div>
-            
+
             <div className="flex flex-col w-[25vw] h-[72.5vh] mt-5 border-2 border-azul rounded-lg overflow-y-auto">
+                <div className="mb-4 text-center mt-5">
+                    <AgregarProducto />
+                </div>
                 {
                     obtenerProductosPagina().map((p, index) => (
-                        <Card key={index} texto={p.nombre} valor={p.precio} foto={p.img_url} id={p.id_prod} />
+                        <Card key={index} texto={p.nombre} valor={p.precio} foto={p.img_url} id={p.id_prod} productoInicial={p} actualizarLista={() => setListaProductos([...listaProductos])} />
                     ))
                 }
             </div>
 
             {/* Controles de Paginación */}
             <div className="flex mt-4 space-x-4">
-                <button 
-                    onClick={() => cambiarPagina(paginaActual - 1)} 
+                <button
+                    onClick={() => cambiarPagina(paginaActual - 1)}
                     className="p-2 text-azulc rounded-lg disabled:bg-gray-400"
                     disabled={paginaActual === 1}
                 >
-                    <ArrowBackIcon/> Anterior
+                    <ArrowBackIcon /> Anterior
                 </button>
                 <span className="text-center text-base">Página {paginaActual}</span>
-                <button 
-                    onClick={() => cambiarPagina(paginaActual + 1)} 
+                <button
+                    onClick={() => cambiarPagina(paginaActual + 1)}
                     className="p-2 text-azulc rounded-lg disabled:bg-gray-400"
-                    disabled={paginaActual === Math.ceil(listaProductos.length / productosPorPagina)}
+                    disabled={paginaActual === Math.ceil(productosFiltrados.length / productosPorPagina)}
                 >
-                    Siguiente <ArrowForwardIcon/>
+                    Siguiente <ArrowForwardIcon />
                 </button>
             </div>
         </div>

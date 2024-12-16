@@ -1,18 +1,7 @@
-import { useEffect, useState } from "react";
-import Callbtn from "../Buttons/buttonCall";
-import { jwtDecode } from "jwt-decode";
+import ComprarProducto from "../../Layouts/ComprarProducto";
 
 
 const Cardprod = (props) => {
-    const [user, setUser] = useState("");
-
-    useEffect(() => {
-        const token = localStorage.getItem("accesstoken");
-        if (token) {
-            const usuario = jwtDecode(token);
-            setUser(usuario);
-        }
-    }, [])
 
     return (
         <div className="text-center" >
@@ -23,9 +12,7 @@ const Cardprod = (props) => {
                 <h1 className="font-serif text-lg ">{props.texto} </h1>
                 <p className="text-rosa font-medium" >{props.valor}</p>
             </div>
-            {user && user.Rol == "cliente" && (<div>
-                <Callbtn text="Comprar" class="font-serif p-3 m-3 text-azul hover:bg-azul hover:text-crema hover:rounded-xl hover:underline" />
-            </div>)}
+            <ComprarProducto/>
         </div>
     )
 }
